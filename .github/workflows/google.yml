@@ -16,7 +16,7 @@ jobs:
   setup-build-publish-deploy:
     name: Setup, Build, Publish, and Deploy
     runs-on: ubuntu-latest
-    environment: ${{ vars.environment }}
+    environment: ${{ github.ref == 'refs/heads/main' && 'PROD' || 'STAGE' }}
 
     permissions:
       contents: 'read'
