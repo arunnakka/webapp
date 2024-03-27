@@ -10,12 +10,13 @@ env:
   GAR_LOCATION:  ${{ vars.GAR_LOCATION }}
   REPOSITORY: ${{ vars.REPOSITORY }}
   IMAGE: ${{ vars.IMAGE }}
+  environment: ${{ github.ref == 'refs/heads/main' && 'PROD' || 'STAGE' }}
 
 jobs:
   setup-build-publish-deploy:
     name: Setup, Build, Publish, and Deploy
     runs-on: ubuntu-latest
-    environment: ${{ github.ref == 'refs/heads/main' && 'PROD' || 'STAGE' }}
+    environment: ${{ vars.environment }}
 
     permissions:
       contents: 'read'
@@ -61,4 +62,4 @@ jobs:
           workflow_file_name: main.yml
           propagate_failure: true
           wait_workflow: true
-          client_payload: '{"appname":"${{ vars.IMAGE }}", "location":"${{ vars.GAR_LOCATION }}"}'
+          client_payload: '{"appname":"${{ vars.IMAGE }}", "location":"${{ vars.GAR_LOCATION }}", ${{ vars.environment }} }'
