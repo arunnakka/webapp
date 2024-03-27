@@ -52,3 +52,13 @@ jobs:
     - name: Publish
       run: |-
         docker push "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE"
+    - name: trigger terraform
+      uses: convictional/trigger-workflow-and-wait@v1.6.1
+      with:
+          owner: arunnakka
+          repo: terraform
+          github_token: ${{ secrets.GIT_TOKEN }}
+          workflow_file_name: main.yml
+          propagate_failure: true
+          wait_workflow: true
+          client_payload: '{"appname":"${{ vars.IMAGE }}", "location":"${{ vars.GAR_LOCATION }}"}'
