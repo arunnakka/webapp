@@ -39,9 +39,7 @@ jobs:
           echo "ENVIRONMENT=stage" >> $GITHUB_ENV
         fi
 
-    - name: Docker configuration
-      run: |-
-        echo '${{ secrets.GCP_CREDENTIALS }}'
+
     - name: Checkout
       uses: actions/checkout@v3
 
