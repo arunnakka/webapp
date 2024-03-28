@@ -33,7 +33,7 @@ jobs:
        credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
     - name: Set Environment Variable
       run: |
-        if [ "${{ steps.branch_name.outputs.branch }}" = "main" ]; then
+        if [ "${{ github.ref  }}" = "refs/heads/main" ]; then
           echo "ENVIRONMENT=prod" >> $GITHUB_ENV
         else
           echo "ENVIRONMENT=stage" >> $GITHUB_ENV
