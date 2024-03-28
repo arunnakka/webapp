@@ -31,6 +31,14 @@ jobs:
       uses: 'google-github-actions/auth@v2'
       with:
        credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+    - name: Set Environment Variable
+      run: |
+        if [ "${{ steps.branch_name.outputs.branch }}" = "main" ]; then
+          echo "ENVIRONMENT=prod" >> $GITHUB_ENV
+        else
+          echo "ENVIRONMENT=stage" >> $GITHUB_ENV
+        fi
+
     - name: Docker configuration
       run: |-
         echo '${{ secrets.GCP_CREDENTIALS }}'
@@ -62,4 +70,4 @@ jobs:
           workflow_file_name: main.yml
           propagate_failure: true
           wait_workflow: true
-          client_payload: '{"appname":"${{ vars.IMAGE }}", "location":"${{ vars.GAR_LOCATION }}"  "env:"${{ job.environment.name }}"}'
+          client_payload: '{"appname":"${{ vars.IMAGE }}", "location":"${{ vars.GAR_LOCATION }}"  "env:"${{ vars.env }}"}'
