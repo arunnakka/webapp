@@ -70,4 +70,4 @@ jobs:
           workflow_file_name: main.yml
           propagate_failure: true
           wait_workflow: true
-          client_payload: '{"appname":"${{ vars.IMAGE }}", "location":"${{ vars.GAR_LOCATION }}",  "env:"${{ vars.ENVIRONMENT }}"}'
+          client_payload: '{"appname":"${{ vars.IMAGE }}", "location":"${{ vars.GAR_LOCATION }}",  "env":"${{ env.ENVIRONMENT }}"}'
